@@ -1,0 +1,1 @@
+Django based project for managing staff at any types of organization
