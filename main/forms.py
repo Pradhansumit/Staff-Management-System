@@ -3,9 +3,10 @@ from . import models
 
 
 class UserCreationForm(forms.ModelForm):
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
     class Meta:
-        model = models.CustomUserManager
+        model = models.CustomUserModel
         fields = ['name', 'email', 'phone_number',
                   'user_status',]
 

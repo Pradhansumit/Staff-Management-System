@@ -31,3 +31,24 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
+
+# update user time-sheet by clicking on the start and stop button from timer frontend page
+
+# start time
+
+
+class StartTime(models.Model):
+    user = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
+    start_time = models.DateTimeField(auto_now_add=True)
+
+
+# stoptime
+class StopTime(models.Model):
+    user = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
+    stop_time = models.DateTimeField(auto_now_add=True)
+
+
+class TimeSheet(models.Model):
+    user = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
+    start_time = models.ForeignKey(StartTime, on_delete=models.PROTECT)
+    stop_time = models.ForeignKey(StopTime, on_delete=models.PROTECT)
