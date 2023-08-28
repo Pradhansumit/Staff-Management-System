@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from . import models
 from . import forms
@@ -38,7 +38,9 @@ def login(request):
 
         if user is not None:
             auth_login(request, user)
-            return redirect('success')
+            # return redirect('success')
+            if user.is_superuser:
+                return redirect('admin_dashboard')
         else:
             raise ValueError("Put correct credentials")
     else:
@@ -83,3 +85,24 @@ def timeSheetUpdate(request):
 
 def success(request):
     return render(request, 'main/success.html')
+
+# admin actions
+
+
+@login_required
+def admin_dashboard(request):
+    user = request.user
+    timesheet_models = models.TimeSheet.objects.all()
+    return render(request, 'main/admin_dashboard.html', locals())
+
+# admin search action
+
+
+def adminSearch(request):
+    if request.method == 'GET':
+        search_name = request.GET['search-name']
+        print(search_name)
+        searched_user = models.CustomUserModel.objects.get(name=search_name)
+        user_id = searched_user.id
+        user_time = models.TimeSheet.objects.filter(user=user_id)
+        return render(request, 'main/searched.html', locals())

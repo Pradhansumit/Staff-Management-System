@@ -10,10 +10,15 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('success/', views.success, name='success'),
 
-    path('timer/', views.timer, name='timer'),
+    # dashboard links
+    path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
 
     # timer ajax function
+    path('timer/', views.timer, name='timer'),
     path('start/', views.timerStart, name="startTimer"),
     path('stop/', views.timerStop, name="stopTimer"),
     path('createtimesheet/', views.timeSheetUpdate, name="timeSheetUpdate"),
+
+    # admin dashboard actions
+    path('admin-search/', views.adminSearch, name='admin-search'),
 ]

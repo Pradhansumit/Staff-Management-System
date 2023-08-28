@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+{% block title %}Admin | Dashboard{% endblock title %}
+{% block body %}
+  <h1 class="text-center my-5">Hi Admin</h1>
+
+  <div class="container search-container">
+    <form action="{% url 'admin-search' %}" method="GET">
+      <input class="form-control me-2 my-3" type="search" placeholder="Search the name" aria-label="Search" name="search-name">
+      <input type="submit" value="Search" class="btn btn-primary align-center mx-auto">
+    </form>
+  </div>
+  
+  <div class="container mt-3 border-top pt-3">
+    <table class="table table-striped-columns">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">Stop Time</th>
+      </tr>
+      {% for times in timesheet_models %}
+        <tr>
+          <th scope="row">{{times.id}}</th>
+          <td>{{times.user.name}}</td>
+          <td>{{times.user}}</td>
+          <td>{{times.user.user_status}}</td>
+          <td>{{times.start_time.start_time}}</td>
+          <td>{{times.stop_time.stop_time}}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock body %}
